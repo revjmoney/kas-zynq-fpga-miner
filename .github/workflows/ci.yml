@@ -38,6 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: YosysHQ/setup-oss-cad-suite@v3
+      - uses: YosysHQ/setup-oss-cad-suite@v4
       - name: The FPGA design parses (Yosys)
         run: for f in orphan_kas/*.v; do yosys -q -p "read_verilog -Iorphan_kas $f" || exit 1; done
