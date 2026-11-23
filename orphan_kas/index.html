@@ -109,7 +109,7 @@ label.devfee input{margin-top:.15em}
 <main>
 <header>
  <div class="identity"><div class="mark" aria-hidden="true">K</div><div><h1>ORPHAN <span>KAS</span></h1><div class="brand">JMSCNC · S9 FPGA · kHeavyHash</div></div></div>
- <div class="header-tools"><a class="coffee" href="https://buymeacoffee.com/revjmoney" target="_blank" rel="noopener">☕ Buy me a coffee</a><span class="pill" id="feeNote" hidden>DEV FEE SLICE</span><button id="motion" type="button" aria-pressed="true">FX on</button><div class="pill" id="connection">CONNECTING</div></div>
+ <div class="header-tools"><a class="coffee" href="https://buymeacoffee.com/revjmoney" target="_blank" rel="noopener">☕ Buy me a coffee</a><span id="orphan-fan"></span><span class="pill" id="feeNote" hidden>DEV FEE SLICE</span><button id="motion" type="button" aria-pressed="true">FX on</button><div class="pill" id="connection">CONNECTING</div></div>
 </header>
 <div class="metrics">
  <div class="metric"><div class="label">FPGA throughput</div><strong><span id="rate">0.0</span> <small>kH/s</small></strong></div>
@@ -430,5 +430,6 @@ if(s.settings){settings=s.settings;const signature=JSON.stringify(settings.walle
 const fee=s.devfee||{};$('feeNote').hidden=!fee.active;
 $('hashes').style.setProperty('--digits',$('hashes').textContent.length);renderLog(s.logs||[]);earnings(s);plot(pipelineActive?rate:0,s.mode==='mine'&&Number.isFinite(m.effective_hashrate)?m.effective_hashrate/1000:null);}catch(e){pipelineActive=false;$('connection').textContent='BOARD OFFLINE';$('connection').classList.add('offline');report(e.message,true);}finally{setTimeout(tick,500);}}tick();
 </script>
+<script>(function(){var s=document.createElement('script');s.src='http://'+location.hostname+':8080/fan.js';s.async=1;document.head.appendChild(s)})()</script>
 </body>
 </html>
