@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.vvp
+*.so
+*.log
+temp/
+.deps/
+.pio/
+*.tar.gz
+orphan_kas/settings.local.json
+orphan_kas/*.local.json
+orphan_kas/.settings-*
+.ardzy_build.json
+local/
+orphan_kas/devfee.local.json

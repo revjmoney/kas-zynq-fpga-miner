@@ -1,0 +1,11 @@
+*.v text eol=lf
+*.vh text eol=lf
+*.py text eol=lf
+*.c text eol=lf
+*.xdc text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.ps1 text eol=lf
+*.md text eol=lf
+*.bit binary
+Oprhan_KAS_S9_Complete_Package/** -text

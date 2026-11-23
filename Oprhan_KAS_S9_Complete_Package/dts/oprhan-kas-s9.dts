@@ -1,0 +1,58 @@
+// oprhan-kas-s9.dts - Linux Device Tree Overlay for Bitmain S9 (Zynq-7010) on Debian 13
+// Exposes:
+//   1) /dev/uio0      -> AXI-Lite control/status registers at 0x43C00000 (4KB) + IRQ_F2P[0] (GIC SPI 29)
+//   2) /dev/udmabuf0  -> Contiguous physical DDR buffer (64 KB) for S_AXI_HP0 zero-copy DMA
+//
+// Compile on Debian 13:
+//   dtc -@ -I dts -O dtb -o oprhan-kas-s9.dtbo oprhan-kas-s9.dts
+// Apply at runtime (configfs):
+//   mkdir -p /sys/kernel/config/device-tree/overlays/oprhan_kas
+//   cp oprhan-kas-s9.dtbo /sys/kernel/config/device-tree/overlays/oprhan_kas/dtbo
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "xlnx,zynq-7000";
+
+    // Fragment 0: Enable FPGA Manager region & load bitstream
+    fragment@0 {
+        target = <&fpga_full>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <1>;
+            firmware-name = "oprhan_kas_4core.bin";
+        };
+    };
+
+    // Fragment 1: Expose 0x43C00000 AXI-Lite slave + IRQ_F2P[0] via generic-uio
+    fragment@1 {
+        target = <&amba>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <1>;
+
+            oprhan_kas_core@43c00000 {
+                compatible = "generic-uio";
+                reg = <0x43c00000 0x1000>;
+                interrupt-parent = <&intc>;
+                // Zynq IRQ_F2P[0] = GIC shared peripheral interrupt 61 -> SPI index 29 (61 - 32 = 29)
+                // Trigger type 4 = active-high level sensitive
+                interrupts = <0 29 4>;
+            };
+        };
+    };
+
+    // Fragment 2: Allocate 64 KB contiguous DMA buffer via ikwzm/udmabuf driver
+    fragment@2 {
+        target-path = "/";
+        __overlay__ {
+            udmabuf@0 {
+                compatible = "ikwzm,u-dma-buf";
+                device-name = "udmabuf0";
+                size = <0x00010000>; // 64 KB (plenty for 2240-byte job descriptors + ring slots)
+                dma-coherent;
+            };
+        };
+    };
+};

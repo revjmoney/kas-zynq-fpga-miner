@@ -1,0 +1,59 @@
+{
+  "board": "s9",
+  "board_name": "Antminer S9",
+  "part": "xc7z010clg400-1",
+  "top": "top",
+  "seconds": 308,
+  "date": "2026-11-21 22:55",
+  "used": {
+    "LUT": 9093,
+    "FF": 7861,
+    "BRAM": 4,
+    "DSP": 1,
+    "LUT_RAM": 0,
+    "SRL": 7,
+    "CARRY": 367,
+    "BUFG": 1,
+    "MMCM_PLL": 0
+  },
+  "max": {
+    "LUT": 17600,
+    "FF": 35200,
+    "BRAM": 60,
+    "DSP": 80,
+    "PINS": 100
+  },
+  "pins": 11,
+  "clocks": {
+    "clk": {
+      "fmax": 129.13,
+      "need": 100.0,
+      "pass": true
+    }
+  },
+  "hold_problems": 0,
+  "timing_ok": true,
+  "paths": [
+    {
+      "clock": "clk",
+      "cross": false,
+      "start": "core.clear",
+      "end": "core.clear",
+      "delay": 7.74,
+      "levels": 5,
+      "logic_ns": 1.14,
+      "route_ns": 6.59,
+      "steps": [
+        {
+          "net": "core.clear",
+          "ns": 0.33,
+          "src": "kas_engine.v:10"
+        }
+      ]
+    }
+  ],
+  "debug": null,
+  "seed": 1,
+  "ethernet_added": false,
+  "bit": "orphan_kas.bit"
+}

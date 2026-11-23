@@ -1,0 +1,14 @@
+{
+  "source_hash_format": "sha256-lf",
+  "bitstream": "orphan_kas.bit",
+  "sha256": "f9b88520657ff1202bbb5d9bb7807592bdb40012dfbf1db39d94fe4b26f01be4",
+  "sources": {
+    "fpga.json": "3a53f89463476074567b873fac7bbbed3323353fc63aeaed6fa6a8f0cb8fe726",
+    "kas_engine.v": "ace72b7ff923e093619c97832c4204559c996b5035f55a1633252d915217d8d5",
+    "kas_keccak.v": "9725301fb2f95bec522c79a2c9b6592cccb9b5a9b98317b5496c423d6c53e54a",
+    "kas_matrix.v": "6f21cd7589d26734be5257798d080b4a209668eab49b5886131f43f86491012d",
+    "orphan_fan.v": "d44ec23ed11296b3d26ee46be565b414814d933c36f271ec59e1b2d9c82816c3",
+    "pins.xdc": "ded2e3cbd1d8dcd49664a7789a06f3b340bcc716b3da3538481dd6937f8a7e44",
+    "top.v": "a3b5580f9bfb79ba6d815ab9f025ffdbf466ae150e3c2542d44ad0a49a6915c4"
+  }
+}
