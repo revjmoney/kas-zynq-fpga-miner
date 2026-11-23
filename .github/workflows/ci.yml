@@ -1,0 +1,43 @@
+# Orphan KAS CI: the reference model, Stratum, the web API and the native matrix code, on every push.
+# by JMSCNC, makers of RotatoCAM. [Rev. J. Money - 2026]
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -q numpy
+      - name: Python files compile
+        run: python -m compileall -q .
+      - name: Reference model (kHeavyHash vectors)
+        run: python test_reference.py
+      - name: Stratum client
+        run: python test_stratum.py
+      - name: Web API (settings, redaction, validation, origin check)
+        run: python test_api.py
+      - name: Native matrix code (same flags as on the board)
+        run: |
+          gcc -O3 -ffp-contract=off -fPIC -shared orphan_kas/matrix_native.c -o orphan_kas/matrix_native.so -lm
+          python test_native.py
+      - name: No private data
+        run: |
+          if git grep -n -I -E '192\.168\.[0-9]+\.[0-9]+|myemail937|CodexStorage|ghp_[A-Za-z0-9]{20}|github_pat_|BEGIN [A-Z ]*PRIVATE KEY' -- . ':!*.png' ':!.github/workflows/ci.yml'; then
+            echo "::error::private data found"; exit 1
+          fi
+  verilog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: YosysHQ/setup-oss-cad-suite@v3
+      - name: The FPGA design parses (Yosys)
+        run: for f in orphan_kas/*.v; do yosys -q -p "read_verilog -Iorphan_kas $f" || exit 1; done
