@@ -32,7 +32,7 @@ This baseline serializes groups of matrix coefficients. Its measured throughput 
 
 ## Pool and UI
 
-* HTTP tests: wallet/pool persistence, password redaction, request validation, origin check and active-job settings guard passed.
+* HTTP tests: wallet/pool persistence, pool account names, request validation, origin check and active-job settings guard passed.
 * Local TCP fake-pool test: subscription, authorization, compact/large jobs, difficulty conversion, extranonce handling, submission and acknowledgement accounting passed.
 * Live HeroMiners US East GPU/FPGA endpoint: subscription and wallet/worker authorization succeeded; live jobs were received and hashed. The pool assigned normalized difficulty 4.
 * **No real accepted pool share has been observed.** At baseline peak throughput, difficulty 4 represents about 66 hours per share on average before job-setup overhead. Zero accepted/rejected shares is consistent with the measured rate.

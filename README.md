@@ -29,7 +29,7 @@ The deployer checks the bitstream and timing report, copies the project onto the
 
 | Setting | Enter |
 | --- | --- |
-| Active wallet | Your full Kaspa receive address, including `kaspa:` |
+| Wallet or pool account | Your full Kaspa receive address, including `kaspa:`, or your pool account name for pools that log in by account (Mining-Dutch) |
 | Pool / bridge | `stratum+tcp://HOST:PORT` or `stratum+ssl://HOST:PORT` |
 | Worker | A name such as `orphan-s9` |
 | Pool password | The value required by your pool, commonly `x` |

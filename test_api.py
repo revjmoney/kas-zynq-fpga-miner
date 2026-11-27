@@ -37,12 +37,14 @@ with tempfile.TemporaryDirectory(prefix='orphan-api-test-') as folder:
     cfg={'wallet':wallet,'wallets':[],'worker':'test','pool':'stratum+tcp://127.0.0.1:5555','password':'test-only'}
     assert post({'action':'settings','settings':cfg})[0]==202
     assert settings.load()['wallet']==wallet and settings.load()['password']=='test-only'
-    assert settings.public()['password']==''
+    assert settings.public()['password']=='test-only'   # LAN-only page shows the saved pool password (Rev's call)
     with patch.object(settings,'save',side_effect=OSError(5,'Input/output error')):
         status,reply=post({'action':'settings','settings':{**cfg,'worker':'replacement'}})
         assert status==503 and 'SD card' in reply['error']
         assert server.control.state['settings']['worker']=='test'
-    assert post({'action':'settings','settings':{**cfg,'wallet':'wrong'}})[0]==400
+    assert post({'action':'settings','settings':{**cfg,'wallet':'not a wallet!'}})[0]==400
+    assert post({'action':'settings','settings':{**cfg,'wallet':'revjmoney'}})[0]==202   # Mining-Dutch: pool account name
+    assert post({'action':'settings','settings':cfg})[0]==202
     assert post({'action':'job','start':'10','end':'1'})[0]==400
     assert post({'action':'job','timestamp':str(1<<64)})[0]==400
     assert post({'action':'job','target':'1'*65})[0]==400
@@ -55,4 +57,4 @@ with tempfile.TemporaryDirectory(prefix='orphan-api-test-') as folder:
     with urllib.request.urlopen(url+'/') as result:
         page=result.read().decode();assert 'Wallet &amp; pool' in page and 'JMSCNC' in page
     server.shutdown();server.server_close()
-print('PASS web API, wallet persistence, secret redaction, input validation, active-job guard and origin check')
+print('PASS web API, wallet persistence, pool account names, input validation, active-job guard and origin check')
